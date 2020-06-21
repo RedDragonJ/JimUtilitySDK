@@ -1,0 +1,28 @@
+os: osx
+language: swift
+osx_image: xcode11.4
+
+branches:
+  only: 
+    - master
+
+git:
+  depth: false
+
+env:
+  - TOOLCHAINS=swift
+  global:
+    - LC_CTYPE=en_US.UTF-8
+    - LANG=en_US.UTF-8
+
+before_install:
+  - brew install git-lfs
+  - TOOLCHAIN_VERSION=swift-DEVELOPMENT-SNAPSHOT-2016-03-24-a
+  - curl -O https://swift.org/builds/development/xcode/${TOOLCHAIN_VERSION}/${TOOLCHAIN_VERSION}-osx.pkg
+  - sudo installer -pkg ${TOOLCHAIN_VERSION}-osx.pkg -target /
+
+before_script:
+  - git lfs pull
+
+script:
+  - swift build --fetch
