@@ -39,7 +39,3 @@ let package = Package(
     ]
 )
 ```
-
-### Configuration Files
-- Travis CI (https://github.com/RedDragonJ/JimSDK/blob/master/.travis.yml)
-- Swift Package (https://github.com/RedDragonJ/JimSDK/blob/master/Package.swift)
