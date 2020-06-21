@@ -1,5 +1,4 @@
 # JimUtilitySDK
-[![Build Status](https://travis-ci.com/RedDragonJ/JimSDK.svg?branch=master)](https://travis-ci.com/RedDragonJ/JimSDK)
 
 This package can only be used on iOS projects.
 
