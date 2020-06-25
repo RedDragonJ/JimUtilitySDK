@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class DateHelper {
+public class DateManager {
     
     /** Convert the date to string **/
     public static func convertToString(_ date: Date, format: String) -> String {
