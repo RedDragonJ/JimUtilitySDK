@@ -9,7 +9,7 @@ import Foundation
 
 public class JFileManager {
     
-    static func getPlistFilePath(name: String) -> URL {
+    public static func getPlistFilePath(name: String) -> URL {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let url = URL(fileURLWithPath: path)
         let pathComponent = url.appendingPathComponent("\(name).plist")
@@ -19,7 +19,7 @@ public class JFileManager {
 }
 
 // MARK: - Write
-extension JFileManager {
+public extension JFileManager {
     
     public static func createFile(name: String, data: [String: Any], completion: @escaping (FileResult) -> Void) {
         if name.isEmpty || name.count == 0 {
@@ -48,7 +48,7 @@ extension JFileManager {
 }
 
 // MARK: - Read
-extension JFileManager {
+public extension JFileManager {
     
     public static func getFile(name: String) -> NSDictionary? {
         let pathComponent = JFileManager.getPlistFilePath(name: name)
@@ -61,7 +61,7 @@ extension JFileManager {
 }
 
 // MARK: - Update
-extension JFileManager {
+public extension JFileManager {
     
     public static func updateFile(name: String, data: [String: Any], completion: @escaping (FileResult) -> Void) {
         JFileManager.removeFile(name: name) { (result) in
@@ -89,7 +89,7 @@ extension JFileManager {
 }
 
 // MARK: - Delete
-extension JFileManager {
+public extension JFileManager {
     
     public static func removeFile(name: String, completion: @escaping (FileResult) -> Void) {
         
