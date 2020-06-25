@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CastManager.swift
 //  
 //
 //  Created by James Layton on 6/25/20.
