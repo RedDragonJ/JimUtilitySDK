@@ -8,11 +8,22 @@
 import UIKit
 
 public extension UIViewController {
-    func addCustomBackButton(imageName: String, title: String?, action: Selector?) {
-        let backImage = UIImage(named: imageName)
-        navigationController?.navigationBar.backIndicatorImage = backImage
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
-        navigationItem.leftItemsSupplementBackButton = true
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: self, action: action)
+    func addCustomBarButton(imageName: String, direction: BarButtonDirection, action: Selector) {
+        let customImage = UIImage(named: imageName)
+        switch direction {
+        case .left:
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: customImage, style: .plain, target: self, action: action)
+        case .right:
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: customImage, style: .plain, target: self, action: action)
+        }
+    }
+    
+    func addCustomBarButton(title: String, direction: BarButtonDirection, action: Selector) {
+        switch direction {
+        case .left:
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: self, action: action)
+        case .right:
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: self, action: action)
+        }
     }
 }
