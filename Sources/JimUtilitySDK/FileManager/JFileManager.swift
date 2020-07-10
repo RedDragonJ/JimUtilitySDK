@@ -21,7 +21,7 @@ public class JFileManager {
 // MARK: - Write
 public extension JFileManager {
     
-    public static func createFile(name: String, data: [String: Any], completion: @escaping (FileResult) -> Void) {
+    static func createFile(name: String, data: [String: Any], completion: @escaping (FileResult) -> Void) {
         if name.isEmpty || name.count == 0 {
             completion(FileResult.error)
             return
@@ -50,7 +50,7 @@ public extension JFileManager {
 // MARK: - Read
 public extension JFileManager {
     
-    public static func getFile(name: String) -> NSDictionary? {
+    static func getFile(name: String) -> NSDictionary? {
         let pathComponent = JFileManager.getPlistFilePath(name: name)
         if let plistDictionary = NSMutableDictionary(contentsOf: pathComponent) {
             return plistDictionary as NSDictionary
@@ -63,7 +63,7 @@ public extension JFileManager {
 // MARK: - Update
 public extension JFileManager {
     
-    public static func updateFile(name: String, data: [String: Any], completion: @escaping (FileResult) -> Void) {
+    static func updateFile(name: String, data: [String: Any], completion: @escaping (FileResult) -> Void) {
         JFileManager.removeFile(name: name) { (result) in
             switch result {
             case .deleteSuccess:
@@ -91,7 +91,7 @@ public extension JFileManager {
 // MARK: - Delete
 public extension JFileManager {
     
-    public static func removeFile(name: String, completion: @escaping (FileResult) -> Void) {
+    static func removeFile(name: String, completion: @escaping (FileResult) -> Void) {
         
         let fileManager = FileManager.default
         let filePath = JFileManager.getPlistFilePath(name: name).path
