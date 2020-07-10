@@ -29,7 +29,7 @@ public class ProgressHUB {
         
         if #available(iOS 13.0, *) {
             progressIndicator = UIActivityIndicatorView(style: .large)
-            progressIndicator.color = .white
+            progressIndicator.color = .systemGray
         } else {
             progressIndicator = UIActivityIndicatorView(style: .whiteLarge)
         }
