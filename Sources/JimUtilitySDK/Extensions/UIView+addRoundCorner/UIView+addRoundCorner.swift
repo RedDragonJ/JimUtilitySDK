@@ -15,7 +15,7 @@
 import UIKit
 #endif
 
-extension UIView {
+public extension UIView {
     func addRoundCorner(radius: CGFloat, by: CGFloat, isClipsToBound: Bool = false) {
         clipsToBounds = isClipsToBound
         layer.cornerRadius = radius / by
