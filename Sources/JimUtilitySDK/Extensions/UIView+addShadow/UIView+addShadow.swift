@@ -21,6 +21,6 @@ public extension UIView {
         layer.shadowOffset = offSet
         layer.shadowRadius = radius
         layer.shadowOpacity = opacity
-        layer.shadowColor = color
+        layer.shadowColor = color?.cgColor
     }
 }
