@@ -13,6 +13,13 @@ public class DefaultManager {
     private let standard = UserDefaults.standard
     private init() {}
 
+    public func setUserInteger(value: Int, key: String) {
+        standard.set(value, forKey: key)
+    }
+    
+    public func getUserInteger(key: String) -> Int {
+        return standard.integer(forKey: key)
+    }
 }
 
 // MARK: - Special methods
