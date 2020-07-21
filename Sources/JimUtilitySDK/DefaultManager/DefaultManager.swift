@@ -21,10 +21,10 @@ public extension DefaultManager {
     func isFirstTimeLaunch() -> Bool {
         let firstTimeKey = "isFirstTimeLaunch"
         if standard.bool(forKey: firstTimeKey) {
-            return true
+            return false
         } else {
             standard.set(true, forKey: firstTimeKey)
-            return false
+            return true
         }
     }
 }
