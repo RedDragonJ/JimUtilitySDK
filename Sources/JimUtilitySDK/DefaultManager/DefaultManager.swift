@@ -9,7 +9,7 @@ import Foundation
 
 public class DefaultManager {
     
-    static let shared = DefaultManager()
+    public static let shared = DefaultManager()
     private let standard = UserDefaults.standard
     private init() {}
 
