@@ -9,9 +9,11 @@ import Foundation
 
 public class CloudKeyStore {
     
-    public var prefix: String
-    public init(){
-        self.prefix = String()
+    public static let shared = CloudKeyStore()
+    var prefix: String
+    
+    private init(){
+        self.prefix = ""
     }
     
     /**
@@ -41,7 +43,12 @@ public class CloudKeyStore {
         }
     }
     
-    deinit {
+    /**
+    
+    Call this method in applicationWillTerminate to remove observers
+    
+    */
+    public func removeObservers() {
         NotificationCenter.default.removeObserver(self,
                                                   name: NSUbiquitousKeyValueStore.didChangeExternallyNotification,
                                                   object: nil)
