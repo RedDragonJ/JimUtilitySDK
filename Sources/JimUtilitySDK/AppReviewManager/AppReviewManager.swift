@@ -14,12 +14,10 @@ public class AppReviewManager {
         let defaultManager = DefaultManager.shared
         let launchCount = defaultManager.getUserInteger(key: "AppLaunchCount")
         if launchCount == 3 {
-            if #available(iOS 10.3, *) {
-                SKStoreReviewController.requestReview()
-            } else {
-                // Don't show
+            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
             }
-            defaultManager.setUserInteger(value: launchCount + 1, key: "AppLaunchCount")
+            defaultManager.setUserInteger(value: 0, key: "AppLaunchCount")
         } else if launchCount < 3 {
             defaultManager.setUserInteger(value: launchCount + 1, key: "AppLaunchCount")
         }
