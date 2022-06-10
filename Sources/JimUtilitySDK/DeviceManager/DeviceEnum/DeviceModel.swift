@@ -21,6 +21,16 @@ public enum DeviceModel {
     case iPhone11
     case iPhone11Pro
     case iPhone11ProMax
+    case iPhoneSE2
+    case iPhone12mini
+    case iPhone12
+    case iPhone12Pro
+    case iPhone12ProMax
+    case iPhone13mini
+    case iPhone13
+    case iPhone13Pro
+    case iPhone13ProMax
+    case iPhoneSE3
     case iPad
     case simulator
     case others

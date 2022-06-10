@@ -47,6 +47,16 @@ public extension UIDevice {
             case "iPhone12,1":                              return DeviceModel.iPhone11
             case "iPhone12,3":                              return DeviceModel.iPhone11Pro
             case "iPhone12,5":                              return DeviceModel.iPhone11ProMax
+            case "iPhone12,8":                              return DeviceModel.iPhoneSE2
+            case "iPhone13,1":                              return DeviceModel.iPhone12mini
+            case "iPhone13,2":                              return DeviceModel.iPhone12
+            case "iPhone13,3":                              return DeviceModel.iPhone12Pro
+            case "iPhone13,4":                              return DeviceModel.iPhone12ProMax
+            case "iPhone14,4":                              return DeviceModel.iPhone13mini
+            case "iPhone14,5":                              return DeviceModel.iPhone13
+            case "iPhone14,2":                              return DeviceModel.iPhone13Pro
+            case "iPhone14,3":                              return DeviceModel.iPhone13ProMax
+            case "iPhone14,6":                              return DeviceModel.iPhoneSE3
             case "iPad3,1", "iPad3,2", "iPad3,3":           return DeviceModel.iPad
             case "iPad3,4", "iPad3,5", "iPad3,6":           return DeviceModel.iPad
             case "iPad4,1", "iPad4,2", "iPad4,3":           return DeviceModel.iPad

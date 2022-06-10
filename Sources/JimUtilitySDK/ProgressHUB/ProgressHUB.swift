@@ -24,19 +24,15 @@ public class ProgressHUB {
     private init() {}
     
     public func showHUB(view: UIView) {
-       containerView = UIView(frame: view.frame)
-       containerView.backgroundColor = UIColor(r: 0, g: 0, b: 0, a: 0.5)
-       
-       if #available(iOS 13.0, *) {
-           progressIndicator = UIActivityIndicatorView(style: .large)
-           progressIndicator.color = .white
-       } else {
-           progressIndicator = UIActivityIndicatorView(style: .whiteLarge)
-       }
-       progressIndicator.center = containerView.center
-       progressIndicator.startAnimating()
-       containerView.addSubview(progressIndicator)
-       view.addSubview(containerView)
+        containerView = UIView(frame: view.frame)
+        containerView.backgroundColor = UIColor(r: 0, g: 0, b: 0, a: 0.5)
+        
+        progressIndicator = UIActivityIndicatorView(style: .large)
+        progressIndicator.color = .white
+        progressIndicator.center = containerView.center
+        progressIndicator.startAnimating()
+        containerView.addSubview(progressIndicator)
+        view.addSubview(containerView)
     }
     
     public func hideHUB() {
