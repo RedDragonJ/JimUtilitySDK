@@ -10,7 +10,6 @@ import Network
 
 public class NetworkMonitor {
     
-    @available(iOS 12.0, *)
     public static func isConnected(networkOption: NetworkOptions, completion: @escaping (Bool)->()) {
         
         var monitor: NWPathMonitor
