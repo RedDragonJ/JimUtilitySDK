@@ -15,6 +15,11 @@
 import UIKit
 #endif
 
+public enum BarButtonDirection {
+    case left
+    case right
+}
+
 public extension UIViewController {
     func addCustomBarButton(imageName: String, direction: BarButtonDirection, action: Selector) {
         let customImage = UIImage(named: imageName)
