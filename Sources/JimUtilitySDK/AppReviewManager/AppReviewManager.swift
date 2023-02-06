@@ -18,7 +18,7 @@ public class AppReviewManager {
                 SKStoreReviewController.requestReview(in: scene)
             }
             defaultManager.setUserInteger(value: 0, key: "AppLaunchCount")
-        } else if launchCount < 3 {
+        } else if launchCount < frequencyCount {
             defaultManager.setUserInteger(value: launchCount + 1, key: "AppLaunchCount")
         }
     }
