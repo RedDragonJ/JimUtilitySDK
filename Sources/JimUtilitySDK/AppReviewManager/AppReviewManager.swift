@@ -10,10 +10,10 @@ import StoreKit
 
 public class AppReviewManager {
     
-    public static func checkAppReview() {
+    public static func checkAppReview(frequencyCount: Int = 3) {
         let defaultManager = DefaultManager.shared
         let launchCount = defaultManager.getUserInteger(key: "AppLaunchCount")
-        if launchCount == 3 {
+        if launchCount == frequencyCount {
             if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
                 SKStoreReviewController.requestReview(in: scene)
             }
