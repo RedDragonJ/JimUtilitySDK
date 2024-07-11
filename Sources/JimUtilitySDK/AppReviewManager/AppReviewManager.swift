@@ -9,7 +9,8 @@ import Foundation
 import StoreKit
 
 public class AppReviewManager {
-    
+    /// Checks if the app review request should be presented to the user based on the launch count.
+    /// - Parameter frequencyCount: The number of app launches after which the review request should be presented. The default value is 3.
     public static func checkAppReview(frequencyCount: Int = 3) {
         let defaultManager = DefaultManager.shared
         let launchCount = defaultManager.getUserInteger(key: "AppLaunchCount")
