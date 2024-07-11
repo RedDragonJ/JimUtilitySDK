@@ -1,5 +1,5 @@
 //
-//  String+isValidEmail.swift
+//  IsValidEmail.swift
 //  
 //
 //  Created by James Layton on 6/21/20.
