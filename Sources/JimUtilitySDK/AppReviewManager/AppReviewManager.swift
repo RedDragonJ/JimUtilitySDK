@@ -10,10 +10,9 @@ import StoreKit
 import UIKit
 
 public class AppReviewManager {
-    private static let lastReviewPromptDateKey = "LastReviewPromptDate"
-    private static let hasReviewedKey = "HasReviewed"
     private static let hasLaunchedKey = "HasLaunched"
-    private static let reviewPromptInterval: TimeInterval = 72 * 60 * 60 // 72 hours in seconds
+    private static let visitCountKey = "VisitCount"
+    private static let reviewPromptThreshold = 5 // Number of visits before prompting for review
 
     // FOR UIKit
     /// Checks if the app review request should be presented to the user based on the review status and time interval.
@@ -26,26 +25,21 @@ public class AppReviewManager {
             return
         }
 
-        let hasReviewed = userDefaults.bool(forKey: hasReviewedKey)
-        let lastPromptDate = (userDefaults.object(forKey: lastReviewPromptDateKey) as? Date) ?? Date.distantPast
-        let currentDate = Date()
+        var visitCount = userDefaults.integer(forKey: visitCountKey)
 
-        // Check if the user has already reviewed the app
-        if hasReviewed {
-            return
-        }
+        // Increment the visit count
+        visitCount += 1
+        userDefaults.set(visitCount, forKey: visitCountKey)
 
-        // Check if it's been 72 hours since the last review prompt
-        let timeSinceLastPrompt = currentDate.timeIntervalSince(lastPromptDate)
-        if timeSinceLastPrompt < reviewPromptInterval {
-            return
-        }
-
-        // Prompt for review if criteria are met
-        if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-            SKStoreReviewController.requestReview(in: scene)
-            userDefaults.set(true, forKey: hasReviewedKey)
-            userDefaults.set(currentDate, forKey: lastReviewPromptDateKey)
+        // Check if the visit count has reached the threshold
+        if visitCount > reviewPromptThreshold {
+            // Reset the visit count after prompting for review
+            userDefaults.set(0, forKey: visitCountKey)
+            
+            // Prompt for review if criteria are met
+            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+            }
         }
     }
 
@@ -61,26 +55,19 @@ public class AppReviewManager {
             return
         }
 
-        let hasReviewed = userDefaults.bool(forKey: hasReviewedKey)
-        let lastPromptDate = (userDefaults.object(forKey: lastReviewPromptDateKey) as? Date) ?? Date.distantPast
-        let currentDate = Date()
+        var visitCount = userDefaults.integer(forKey: visitCountKey)
 
-        // Check if the user has already reviewed the app
-        if hasReviewed {
+        // Increment the visit count
+        visitCount += 1
+        userDefaults.set(visitCount, forKey: visitCountKey)
+
+        // Check if the visit count has reached the threshold
+        if visitCount > reviewPromptThreshold {
+            // Reset the visit count after prompting for review
+            userDefaults.set(0, forKey: visitCountKey)
+            completion(true)
+        } else {
             completion(false)
-            return
         }
-
-        // Check if it's been 72 hours since the last review prompt
-        let timeSinceLastPrompt = currentDate.timeIntervalSince(lastPromptDate)
-        if timeSinceLastPrompt < reviewPromptInterval {
-            completion(false)
-            return
-        }
-
-        // Update user defaults and call completion to request a review
-        userDefaults.set(true, forKey: hasReviewedKey)
-        userDefaults.set(currentDate, forKey: lastReviewPromptDateKey)
-        completion(true)
     }
 }
