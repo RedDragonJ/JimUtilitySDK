@@ -12,12 +12,20 @@ import UIKit
 public class AppReviewManager {
     private static let lastReviewPromptDateKey = "LastReviewPromptDate"
     private static let hasReviewedKey = "HasReviewed"
+    private static let hasLaunchedKey = "HasLaunched"
     private static let reviewPromptInterval: TimeInterval = 72 * 60 * 60 // 72 hours in seconds
 
     // FOR UIKit
     /// Checks if the app review request should be presented to the user based on the review status and time interval.
     public static func checkAppReview() {
         let userDefaults = UserDefaults.standard
+
+        // Check if this is the first launch
+        if !userDefaults.bool(forKey: hasLaunchedKey) {
+            userDefaults.set(true, forKey: hasLaunchedKey)
+            return
+        }
+
         let hasReviewed = userDefaults.bool(forKey: hasReviewedKey)
         let lastPromptDate = (userDefaults.object(forKey: lastReviewPromptDateKey) as? Date) ?? Date.distantPast
         let currentDate = Date()
@@ -45,6 +53,14 @@ public class AppReviewManager {
     /// Checks if the app review request should be presented to the user based on the review status and time interval.
     public static func checkAppReview(completion: @escaping (Bool) -> Void) {
         let userDefaults = UserDefaults.standard
+
+        // Check if this is the first launch
+        if !userDefaults.bool(forKey: hasLaunchedKey) {
+            userDefaults.set(true, forKey: hasLaunchedKey)
+            completion(false)
+            return
+        }
+
         let hasReviewed = userDefaults.bool(forKey: hasReviewedKey)
         let lastPromptDate = (userDefaults.object(forKey: lastReviewPromptDateKey) as? Date) ?? Date.distantPast
         let currentDate = Date()
