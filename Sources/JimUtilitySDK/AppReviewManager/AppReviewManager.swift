@@ -9,65 +9,55 @@ import Foundation
 import StoreKit
 import UIKit
 
+@MainActor
 public class AppReviewManager {
     private static let hasLaunchedKey = "HasLaunched"
     private static let visitCountKey = "VisitCount"
-    private static let reviewPromptThreshold = 5 // Number of visits before prompting for review
+    private static let reviewPromptThreshold = 5
 
     // FOR UIKit
-    /// Checks if the app review request should be presented to the user based on the review status and time interval.
     public static func checkAppReview() {
         let userDefaults = UserDefaults.standard
 
-        // Check if this is the first launch
         if !userDefaults.bool(forKey: hasLaunchedKey) {
             userDefaults.set(true, forKey: hasLaunchedKey)
             return
         }
 
         var visitCount = userDefaults.integer(forKey: visitCountKey)
-
-        // Increment the visit count
         visitCount += 1
         userDefaults.set(visitCount, forKey: visitCountKey)
 
-        // Check if the visit count has reached the threshold
         if visitCount > reviewPromptThreshold {
-            // Reset the visit count after prompting for review
             userDefaults.set(0, forKey: visitCountKey)
-            
-            // Prompt for review if criteria are met
             if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                SKStoreReviewController.requestReview(in: scene)
+                AppStore.requestReview(in: scene)
             }
         }
     }
 
     // FOR SWIFTUI
-    /// Checks if the app review request should be presented to the user based on the review status and time interval.
-    public static func checkAppReview(completion: @escaping (Bool) -> Void) {
+    public static func checkAppReview() async -> Bool {
         let userDefaults = UserDefaults.standard
 
-        // Check if this is the first launch
         if !userDefaults.bool(forKey: hasLaunchedKey) {
             userDefaults.set(true, forKey: hasLaunchedKey)
-            completion(false)
-            return
+            return false
         }
 
         var visitCount = userDefaults.integer(forKey: visitCountKey)
-
-        // Increment the visit count
         visitCount += 1
         userDefaults.set(visitCount, forKey: visitCountKey)
 
-        // Check if the visit count has reached the threshold
         if visitCount > reviewPromptThreshold {
-            // Reset the visit count after prompting for review
             userDefaults.set(0, forKey: visitCountKey)
-            completion(true)
-        } else {
-            completion(false)
+            return true
         }
+        return false
+    }
+
+    @available(*, deprecated, message: "Use async/await version: await checkAppReview()")
+    public static func checkAppReview(completion: @escaping @Sendable (Bool) -> Void) {
+        Task { completion(await checkAppReview()) }
     }
 }

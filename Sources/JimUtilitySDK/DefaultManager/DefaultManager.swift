@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public class DefaultManager {
     
     public static let shared = DefaultManager()

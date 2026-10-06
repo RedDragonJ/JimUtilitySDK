@@ -7,10 +7,11 @@
 
 import Foundation
 
+@MainActor
 public class CloudKeyStore {
     
     public static let shared = CloudKeyStore()
-    var prefix: String
+    private var prefix: String
     
     private init(){
         self.prefix = ""
@@ -81,8 +82,6 @@ public class CloudKeyStore {
                 UserDefaults.standard.set(value, forKey: key)
             }
         }
-        UserDefaults.standard.synchronize()
-        
         // enable NSUserDefaultsDidChangeNotification notifications again
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateICloud(notification:)),

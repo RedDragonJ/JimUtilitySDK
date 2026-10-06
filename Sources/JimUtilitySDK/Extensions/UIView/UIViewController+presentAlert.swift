@@ -24,7 +24,7 @@ public extension UIViewController {
         present(alertView, animated: true, completion: nil)
     }
     
-    /** Alert view with one ok button and closure **/
+    @available(*, deprecated, message: "Use async/await with presentAlert(title:message:) and handle actions in a Task.")
     func presentAlert(title: String?, message: String?, action: @escaping (()->())) {
         let alertView = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: K.Alert.Ok, style: .default, handler: {(alertAction) in
@@ -34,7 +34,7 @@ public extension UIViewController {
         present(alertView, animated: true, completion: nil)
     }
     
-    /** Alert view with two buttons same closure **/
+    @available(*, deprecated, message: "Use async/await with presentAlert(title:message:) and handle actions in a Task.")
     func presentAlert(title: String?, message: String?, cancelAction: @escaping (()->()), okAction: @escaping (()->())) {
         let alertView = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: K.Alert.Cancel, style: .cancel, handler: {(alertAction) in

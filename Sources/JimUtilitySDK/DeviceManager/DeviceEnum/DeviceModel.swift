@@ -1,20 +1,12 @@
 //
 //  DeviceModel.swift
-//  
+//
 //
 //  Created by James Layton on 6/21/20.
 //
 
 public enum DeviceModel {
-    case iPhone6
-    case iPhone6Plus
-    case iPhone6s
-    case iPhone6sPlus
-    case iPhone7
-    case iPhone7Plus
-    case iPhone8
-    case iPhone8Plus
-    case iPhoneX
+    // iOS 18 minimum — iPhone XS and later
     case iPhoneXs
     case iPhoneXsMax
     case iPhoneXr
@@ -31,6 +23,19 @@ public enum DeviceModel {
     case iPhone13Pro
     case iPhone13ProMax
     case iPhoneSE3
+    case iPhone14
+    case iPhone14Plus
+    case iPhone14Pro
+    case iPhone14ProMax
+    case iPhone15
+    case iPhone15Plus
+    case iPhone15Pro
+    case iPhone15ProMax
+    case iPhone16
+    case iPhone16Plus
+    case iPhone16Pro
+    case iPhone16ProMax
+    case iPhoneSE4
     case iPad
     case simulator
     case others

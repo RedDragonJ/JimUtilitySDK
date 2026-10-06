@@ -1,6 +1,6 @@
 //
 //  FileManager.swift
-//  
+//
 //
 //  Created by James Layton on 6/21/20.
 //
@@ -8,101 +8,78 @@
 import Foundation
 
 public class JFileManager {
-    
+
     public static func getPlistFilePath(name: String) -> URL {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let url = URL(fileURLWithPath: path)
-        let pathComponent = url.appendingPathComponent("\(name).plist")
-        return pathComponent
+        return url.appendingPathComponent("\(name).plist")
     }
-    
 }
 
 // MARK: - Write
 public extension JFileManager {
-    
-    static func createFile(name: String, data: [String: Any], completion: @escaping (FileResult) -> Void) {
-        if name.isEmpty || name.count == 0 {
-            completion(FileResult.error)
-            return
-        }
-        
+
+    static func createFile(name: String, data: [String: Any]) -> FileResult {
+        guard !name.isEmpty else { return .error }
+
         let fileManager = FileManager.default
         let pathComponent = JFileManager.getPlistFilePath(name: name)
-        let filePath = pathComponent.path
-        
-        if fileManager.fileExists(atPath: filePath) {
-            completion(FileResult.fileExist)
-            
-        } else {
-            let plistDictionary = NSDictionary(dictionary: data)
-            if plistDictionary.write(to: pathComponent, atomically: true) {
-                completion(FileResult.writeSuccess)
-                
-            } else {
-                completion(FileResult.writeFailed)
-                
-            }
+
+        if fileManager.fileExists(atPath: pathComponent.path) {
+            return .fileExist
         }
+
+        let plistDictionary = NSDictionary(dictionary: data)
+        return plistDictionary.write(to: pathComponent, atomically: true) ? .writeSuccess : .writeFailed
+    }
+
+    @available(*, deprecated, message: "Use createFile(name:data:) which returns FileResult directly.")
+    static func createFile(name: String, data: [String: Any], completion: @escaping (FileResult) -> Void) {
+        completion(createFile(name: name, data: data))
     }
 }
 
 // MARK: - Read
 public extension JFileManager {
-    
+
     static func getFile(name: String) -> NSDictionary? {
         let pathComponent = JFileManager.getPlistFilePath(name: name)
-        if let plistDictionary = NSMutableDictionary(contentsOf: pathComponent) {
-            return plistDictionary as NSDictionary
-        } else {
-            return nil
-        }
+        return NSMutableDictionary(contentsOf: pathComponent)
     }
 }
 
 // MARK: - Update
 public extension JFileManager {
-    
+
+    static func updateFile(name: String, data: [String: Any]) -> FileResult {
+        let deleteResult = removeFile(name: name)
+        guard deleteResult == .deleteSuccess else { return .updateFailed }
+        let createResult = createFile(name: name, data: data)
+        return createResult == .writeSuccess ? .updateSuccess : .updateFailed
+    }
+
+    @available(*, deprecated, message: "Use updateFile(name:data:) which returns FileResult directly.")
     static func updateFile(name: String, data: [String: Any], completion: @escaping (FileResult) -> Void) {
-        JFileManager.removeFile(name: name) { (result) in
-            switch result {
-            case .deleteSuccess:
-                JFileManager.createFile(name: name, data: data, completion: { (result) in
-                    switch result {
-                    case .writeSuccess:
-                        completion(FileResult.updateSuccess)
-                        break
-                        
-                    default:
-                        completion(FileResult.updateFailed)
-                        break
-                    }
-                })
-                break
-                
-            default:
-                completion(FileResult.updateFailed)
-                break
-            }
-        }
+        completion(updateFile(name: name, data: data))
     }
 }
 
 // MARK: - Delete
 public extension JFileManager {
-    
-    static func removeFile(name: String, completion: @escaping (FileResult) -> Void) {
-        
-        let fileManager = FileManager.default
+
+    static func removeFile(name: String) -> FileResult {
         let filePath = JFileManager.getPlistFilePath(name: name).path
-        
         do {
-            try fileManager.removeItem(atPath: filePath)
-            completion(FileResult.deleteSuccess)
-            
-        } catch let error {
+            try FileManager.default.removeItem(atPath: filePath)
+            return .deleteSuccess
+        } catch {
             print("Error delete file", error.localizedDescription)
-            completion(FileResult.deleteSuccess)
+            return .deleteFailed
         }
+    }
+
+    @available(*, deprecated, message: "Use removeFile(name:) which returns FileResult directly.")
+    static func removeFile(name: String, completion: @escaping (FileResult) -> Void) {
+        completion(removeFile(name: name))
     }
 }
