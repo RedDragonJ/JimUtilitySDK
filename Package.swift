@@ -5,13 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "JimUtilitySDK",
-    platforms: [
-        .iOS(.v18),
-        .macOS(.v12),
-        .watchOS(.v8),
-        .tvOS(.v15),
-        .visionOS(.v1)
-    ],
+    platforms: [.iOS(.v18)],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
